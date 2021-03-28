@@ -2,6 +2,7 @@ var speedH = 0;
 var speedV = 0;
 var playerX = 200;
 var playerY = 200;
+var playerHue = 0;
 
 var containerEl = document.getElementById("container");
 function changeSpeed(event) {
@@ -24,6 +25,7 @@ function changeSpeed(event) {
 }
 
 var timeInterval = setInterval(function () {
+    playerHue = (playerHue + 1) % 360;
     var newX = playerX + speedH;
     var newY = playerY + speedV;
     if (newX < 0) {
@@ -48,7 +50,7 @@ var timeInterval = setInterval(function () {
     else {
         playerY = newY;
     }
-    containerEl.innerHTML = "<div id=\"player\" style=\"background-color: #ff0000; position: fixed; top: " + playerY + "px; left:" + playerX + "px\"></div>"
+    containerEl.innerHTML = "<div id=\"player\" style=\"background-color: hsl(" + playerHue + ", 100%, 50%); position: fixed; top: " + playerY + "px; left:" + playerX + "px\"></div>"
   }, 33);
 
 document.addEventListener("keydown", changeSpeed);
