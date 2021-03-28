@@ -1,22 +1,28 @@
+const ACCEL = 0.1;
+const OUTER_BOUND = 95;
+const BOUNCE_FRIC = -0.6;
+const SLIDE_FRIC = 0.95;
+
 var speedH = 0;
 var speedV = 0;
-var playerX = 200;
-var playerY = 200;
+var playerX = 47.5;
+var playerY = 47.5;
 var playerHue = 0;
 
 var containerEl = document.getElementById("container");
 function changeSpeed(event) {
+    
     if (event.code == "KeyA") {
-        speedH -= 0.5;
+        speedH -= ACCEL;
     }
     else if (event.code == "KeyD") {
-        speedH += 0.5;
+        speedH += ACCEL;
     }
     else if (event.code == "KeyS") {
-        speedV += 0.5;
+        speedV += ACCEL;
     }
     else if (event.code == "KeyW") {
-        speedV -= 0.5;
+        speedV -= ACCEL;
     }
     else if (event.code == "Space") {
         speedH = 0;
@@ -30,27 +36,31 @@ var timeInterval = setInterval(function () {
     var newY = playerY + speedV;
     if (newX < 0) {
         playerX = 0;
-        speedH *= -0.6;
+        speedH *= BOUNCE_FRIC;
+        speedV *= SLIDE_FRIC;
     }
-    else if (newX > 600) {
-        playerX = 600;
-        speedH *= -0.6;
+    else if (newX > OUTER_BOUND) {
+        playerX = OUTER_BOUND;
+        speedH *= BOUNCE_FRIC;
+        speedV *= SLIDE_FRIC;
     }
     else {
         playerX = newX;
     }
     if (newY < 0) {
         playerY = 0;
-        speedV *= -0.6;
+        speedV *= BOUNCE_FRIC;
+        speedH *= SLIDE_FRIC;
     }
-    else if (newY > 400) {
-        playerY = 400;
-        speedV *= -0.6;
+    else if (newY > 100 - (5 * window.innerWidth / window.innerHeight)) {
+        playerY = 100 - (5 * window.innerWidth / window.innerHeight);
+        speedV *= BOUNCE_FRIC;
+        speedH *= SLIDE_FRIC;
     }
     else {
         playerY = newY;
     }
-    containerEl.innerHTML = "<div id=\"player\" style=\"background-color: hsl(" + playerHue + ", 100%, 50%); position: fixed; top: " + playerY + "px; left:" + playerX + "px\"></div>"
+    containerEl.innerHTML = "<div id=\"player\" style=\"background-color: hsl(" + playerHue + ", 100%, 50%); position: fixed; top: " + playerY + "%; left:" + playerX + "%\"></div>"
   }, 33);
 
 document.addEventListener("keydown", changeSpeed);
