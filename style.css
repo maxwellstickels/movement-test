@@ -1,3 +1,11 @@
+* {
+    /* Thanks to w3 for introducing me to overflow hiding. No more nasty scrollbar phasing in and out of existence :) */
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+
 #player {
     width: 5%;
     padding-top: 5%;
