@@ -1,6 +1,11 @@
 const ACCEL = 0.1;
 const OUTER_BOUND = 95;
+
+// Bounce friction reverses and reduces player's perpendicular momentum.
+// (i.e. if the player hits a vertical wall while going left, they will bounce to the right at a slower speed). 
+// Keep it between 0 and 1.
 const BOUNCE_FRIC = -0.6;
+// Slide friction reduces player's parallel momentum (i.e. if the player scrapes against a wall they will slow to a halt). Keep it between 0 and 1.
 const SLIDE_FRIC = 0.95;
 // 2.5% horizontal/vertical offset of playerX or playerY gives the player's center.
 const OFFSET = 2.5;
@@ -95,7 +100,7 @@ var timeInterval = setInterval(function () {
         playerY = newY;
     }
     containerEl.innerHTML = "<div id=\"player\" style=\"background-color: hsl(" + playerHue + ", 100%, 50%); position: fixed; top: " + playerY + "%; left: " + playerX + "%\"></div>"
-  }, 33);
+}, 33);
 
 document.addEventListener("keydown", changeSpeed);
 containerEl.addEventListener("click", changeSpeedClick);
